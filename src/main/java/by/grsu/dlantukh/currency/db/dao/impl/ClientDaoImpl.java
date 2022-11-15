@@ -25,7 +25,7 @@ public class ClientDaoImpl extends AbstractDao implements IDao<Integer, Client> 
 	@Override
 	public void insert(Client entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("insert into client(firstName, lastName, patronymic, passport) values(?,?,?,?)");
+			PreparedStatement pstmt = c.prepareStatement("insert into client(first_name, last_name, patronymic, passport) values(?,?,?,?)");
 			pstmt.setString(1, entity.getFirstName());
 			pstmt.setString(2, entity.getLastName());
 			pstmt.setString(3, entity.getPatronymic());
@@ -40,7 +40,7 @@ public class ClientDaoImpl extends AbstractDao implements IDao<Integer, Client> 
 	@Override
 	public void update(Client entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("update client set firstName=?, lastName=?, patronymic=?, passport=? where id=?");
+			PreparedStatement pstmt = c.prepareStatement("update client set first_name=?, last_name=?, patronymic=?, passport=? where id=?");
 			pstmt.setString(1, entity.getFirstName());
 			pstmt.setString(2, entity.getLastName());
 			pstmt.setString(3, entity.getPatronymic());
@@ -59,7 +59,7 @@ public class ClientDaoImpl extends AbstractDao implements IDao<Integer, Client> 
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException("can't delete Brand entity", e);
+			throw new RuntimeException("can't delete Client entity", e);
 		}
 
 	}
@@ -102,8 +102,8 @@ public class ClientDaoImpl extends AbstractDao implements IDao<Integer, Client> 
 	private Client rowToEntity(ResultSet rs) throws SQLException {
 		Client entity = new Client();
 		entity.setId(rs.getInt("id"));
-		entity.setFirstName(rs.getString("firstName"));
-		entity.setLastName(rs.getString("lastName"));
+		entity.setFirstName(rs.getString("first_name"));
+		entity.setLastName(rs.getString("last_name"));
 		entity.setPatronymic(rs.getString("patronymic"));
 		entity.setPassport(rs.getString("passport"));
 		return entity;

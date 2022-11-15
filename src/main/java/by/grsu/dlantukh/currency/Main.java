@@ -14,8 +14,8 @@ public class Main{
 		
 		Currency currency = new Currency();
 		
-		currency.setCode(1);
-		currency.setName("EUR");;
+		currency.setCode("EUR");
+		currency.setName("Евро");;
 		System.out.println (currency.toString());
 		
 		

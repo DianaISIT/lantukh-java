@@ -30,24 +30,31 @@ public class ClientDaoTest extends AbstractTest {
 		entity.setPassport("KH67874374");
 		dao.insert(entity);
 
-		String newName = "Petia";
-		entity.setFirstName(newName);
-		entity.setLastName("IVANOV");
-		entity.setPatronymic("IVANOVICH");
-		entity.setPassport("KH67874374");
+		String newFirstName = "Petia";
+		entity.setFirstName(newFirstName);
+		String newLastName = "FTYU";
+		entity.setLastName(newLastName);
+		String newPatronymic= "ALEKCEEVICH";
+		entity.setPatronymic(newPatronymic);
+		String newPassport= "KH56789767";
+		entity.setPassport(newPassport);
 		dao.update(entity);
 
 		Client updatedEntity = dao.getById(entity.getId());
-		Assertions.assertEquals( newName, updatedEntity.getName());
-		Assertions.assertNotEquals(updatedEntity.getUpdated(), updatedEntity.getCreated());
+		Assertions.assertEquals( newFirstName, updatedEntity.getFirstName());
+		Assertions.assertEquals( newLastName, updatedEntity.getLastName());
+		Assertions.assertEquals( newPatronymic, updatedEntity.getPatronymic());
+		Assertions.assertEquals( newPassport, updatedEntity.getPassport());
+		Assertions.assertNotNull(updatedEntity);
 	}
 
 	@Test
 	public void testDelete() {
-		Brand entity = new Brand();
-		entity.setName("VW");
-		entity.setCreated(getCurrentTime());
-		entity.setUpdated(getCurrentTime());
+		Client entity = new Client();
+		entity.setFirstName("IVAN");
+		entity.setLastName("IVANOV");
+		entity.setPatronymic("IVANOVICH");
+		entity.setPassport("KH67874374");
 		dao.insert(entity);
 
 		dao.delete(entity.getId());
@@ -57,27 +64,30 @@ public class ClientDaoTest extends AbstractTest {
 
 	@Test
 	public void testGetById() {
-		Brand entity = new Brand();
-		entity.setName("VW");
-		entity.setCreated(getCurrentTime());
-		entity.setUpdated(getCurrentTime());
+		Client entity = new Client();
+		entity.setFirstName("IVAN");
+		entity.setLastName("IVANOV");
+		entity.setPatronymic("IVANOVICH");
+		entity.setPassport("KH67874374");
 		dao.insert(entity);
 
-		Brand selectedEntity = dao.getById(entity.getId());
+		Client selectedEntity = dao.getById(entity.getId());
 
-		Assertions.assertEquals(entity.getName(), selectedEntity.getName());
-		Assertions.assertEquals(entity.getCreated(), selectedEntity.getCreated());
-		Assertions.assertEquals(entity.getUpdated(), selectedEntity.getUpdated());
+		Assertions.assertEquals(entity.getFirstName(), selectedEntity.getFirstName());
+		Assertions.assertEquals(entity.getLastName(), selectedEntity.getLastName());
+		Assertions.assertEquals(entity.getPatronymic(), selectedEntity.getPatronymic());
+		Assertions.assertEquals(entity.getPassport(), selectedEntity.getPassport());
 	}
 
 	@Test
 	public void testGetAll() {
 		int expectedCount = getRandomNumber(1, 5);
 		for (int i = 1; i <= expectedCount; i = i + 1) {
-			Brand entity = new Brand();
-			entity.setName("VW" + i); // generate some random meaningless name as it is just a test (the data can be unreal)
-			entity.setCreated(getCurrentTime());
-			entity.setUpdated(getCurrentTime());
+			Client entity = new Client();
+			entity.setFirstName("IVAN" + i); // generate some random meaningless name as it is just a test (the data can be unreal)
+			entity.setLastName("IVANOV");
+			entity.setPatronymic("IVANOVICH");
+			entity.setPassport("KH67874374");
 			dao.insert(entity);
 		}
 

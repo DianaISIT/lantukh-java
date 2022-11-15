@@ -11,19 +11,19 @@ CREATE TABLE currency (
 	name VARCHAR NOT NULL
 );
 
-CREATE TABLE transaction (
+CREATE TABLE tranzaction (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	client_id INTEGER NOT NULL,
-	currency_code_from VARCHAR NOT NULL,
-	currency_code_to VARCHAR NOT NULL,
+	client_id INTEGER NOT NULL REFERENCES client(id),
+	currency_code_from VARCHAR NOT NULL REFERENCES currency(code),
+	currency_code_to VARCHAR NOT NULL REFERENCES currency(code),
 	amount float NOT NULL,
 	date datetime NOT NULL,
 	result float NOT NULL
 );
 
 CREATE TABLE currency_rate (
-	currency_From_code VARCHAR NOT NULL,
-	currency_To_code VARCHAR NOT NULL,
+	currency_from_code VARCHAR NOT NULL REFERENCES currency(code),
+	currency_to_code VARCHAR NOT NULL REFERENCES currency(code),
 	value_purchase float NOT NULL,
 	value_pokypka float NOT NULL
 );
