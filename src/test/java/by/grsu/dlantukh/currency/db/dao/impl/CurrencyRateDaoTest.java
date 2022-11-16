@@ -17,47 +17,55 @@ public class CurrencyRateDaoTest extends AbstractTest {
 		// insert currency
 
 		CurrencyRate entity = new CurrencyRate();
-		entity.setCurrencyFromCode(saveCurrency("code").getCode());
-		entity.setCurrencyToCode(saveCurrency("code").getCode());
+		entity.setCurrencyFromCode(saveCurrency("USD").getCode());
+		entity.setCurrencyToCode(saveCurrency("EUR").getCode());
 		entity.setValuePurchase(1.5f);
 		entity.setValuePokypka(5.6f);
 
 		currencyRateDao.insert(entity);
-
-		Assertions.assertNotNull(currencyRateDao.getById(null, null));
+		
+		Assertions.assertNotNull(entity.getCurrencyFromCode(),entity.getCurrencyToCode());
+		
 	}
 
 	@Test
 	public void testUpdate() {
 		CurrencyRate entity = new CurrencyRate();
-		entity.setCurrencyFromCode(saveCurrency("code").getCode());
-		entity.setCurrencyToCode(saveCurrency("code").getCode());
+		entity.setCurrencyFromCode(saveCurrency("USD").getCode());
+		entity.setCurrencyToCode(saveCurrency("EUR").getCode());
 		entity.setValuePurchase(1.5f);
 		entity.setValuePokypka(5.6f);
 		currencyRateDao.insert(entity);
 
-		Float newValuePurchase = 1.7f;
-		entity.setValuePurchase(newValuePurchase);
+		Currency newCurrency = saveCurrency("RUB");
+		entity.setCurrencyFromCode(newCurrency.getCode());
+
+		Currency newCurrency1 = saveCurrency("PLN");
+		entity.setCurrencyToCode(newCurrency1.getCode());
+		
+		entity.setValuePurchase(5.9f);
+		entity.setValuePokypka(9.7f);
+		
 		currencyRateDao.insert(entity);
 
-		Float newValuePokypka = 1.8f;
-		entity.setValuePokypka(newValuePokypka);
-		currencyRateDao.insert(entity);
+		CurrencyRate updatedEntity = currencyRateDao.getById(entity.getCurrencyFromCode(),entity.getCurrencyToCode());
 
-		CurrencyRate updatedEntity = currencyRateDao.getById(null, null);
-
-		Assertions.assertEquals(newValuePurchase, updatedEntity.getValuePurchase());
-		Assertions.assertEquals(newValuePokypka, updatedEntity.getValuePokypka());
+		Assertions.assertEquals(newCurrency.getCode(), updatedEntity.getCurrencyFromCode());
+		Assertions.assertEquals(newCurrency1.getCode(), updatedEntity.getCurrencyToCode());
+		Assertions.assertEquals(5.9f, updatedEntity.getValuePurchase());
+		Assertions.assertEquals(9.7f, updatedEntity.getValuePokypka());
 	}
 
 	@Test
 	public void testDelete() {
 		CurrencyRate entity = new CurrencyRate();
-		entity.setCurrencyFromCode(saveCurrency("code").getCode());
-		entity.setCurrencyToCode(saveCurrency("code").getCode());
+		entity.setCurrencyFromCode(saveCurrency("USD").getCode());
+		entity.setCurrencyToCode(saveCurrency("EUR").getCode());
 		entity.setValuePurchase(1.5f);
 		entity.setValuePokypka(5.6f);
 		currencyRateDao.insert(entity);
+		
+		currencyRateDao.delete(entity.getCurrencyFromCode(),entity.getCurrencyToCode());
 
 		Assertions.assertNull(currencyRateDao.getById(null, null));
 	}
@@ -73,10 +81,13 @@ public class CurrencyRateDaoTest extends AbstractTest {
 		entity.setValuePokypka(5.6f);
 		currencyRateDao.insert(entity);
 
-		CurrencyRate selectedEntity = currencyRateDao.getById(null, null);
+		CurrencyRate selectedEntity = currencyRateDao.getById(entity.getCurrencyFromCode(),entity.getCurrencyToCode());
 
+		Assertions.assertEquals(entity.getCurrencyFromCode(), selectedEntity.getCurrencyFromCode());
+		Assertions.assertEquals(entity.getCurrencyToCode(), selectedEntity.getCurrencyToCode());
 		Assertions.assertEquals(entity.getValuePurchase(), selectedEntity.getValuePurchase());
 		Assertions.assertEquals(entity.getValuePokypka(), selectedEntity.getValuePokypka());
+		
 	}
 
 	@Test
@@ -84,9 +95,9 @@ public class CurrencyRateDaoTest extends AbstractTest {
 		int expectedCount = getRandomNumber(1, 5);
 		for (int i = 1; i <= expectedCount; i = i + 1) {
 			CurrencyRate entity = new CurrencyRate();
-			entity.setCurrencyFromCode(saveCurrency("code+i").getCode()); // generate some random meaningless name as it
+			entity.setCurrencyFromCode(saveCurrency("EUR"+i).getCode()); // generate some random meaningless name as it
 																			// is just a test (the data can be unreal)
-			entity.setCurrencyToCode(saveCurrency("code+i").getCode());
+			entity.setCurrencyToCode(saveCurrency("USD"+i).getCode());
 			entity.setValuePurchase(1.5f + i);
 			entity.setValuePokypka(5.6f + i);
 			currencyRateDao.insert(entity);

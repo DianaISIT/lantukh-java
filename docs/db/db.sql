@@ -7,8 +7,8 @@ CREATE TABLE client (
 );
 
 CREATE TABLE currency (
-	code VARCHAR NOT NULL,
-	name VARCHAR NOT NULL
+	code VARCHAR NOT NULL UNIQUE,
+	name VARCHAR NOT NULL 
 );
 
 CREATE TABLE tranzaction (
@@ -17,7 +17,7 @@ CREATE TABLE tranzaction (
 	currency_code_from VARCHAR NOT NULL REFERENCES currency(code),
 	currency_code_to VARCHAR NOT NULL REFERENCES currency(code),
 	amount float NOT NULL,
-	date datetime NOT NULL,
+	created datetime NOT NULL,
 	result float NOT NULL
 );
 

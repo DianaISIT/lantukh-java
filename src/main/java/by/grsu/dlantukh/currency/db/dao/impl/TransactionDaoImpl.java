@@ -22,12 +22,12 @@ public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Tra
 	public void insert(Transaction entity) {
 		try (Connection c = createConnection()) {
 			PreparedStatement pstmt = c
-					.prepareStatement("insert into tranzaction(client_id, currency_code_from, currency_code_to, amount, date, result) values(?,?,?,?,?,?)");
+					.prepareStatement("insert into tranzaction(client_id, currency_code_from, currency_code_to, amount, created, result) values(?,?,?,?,?,?)");
 			pstmt.setInt(1, entity.getClientId());
 			pstmt.setString(2, entity.getCurrencyCodeFrom());
 			pstmt.setString(3, entity.getCurrencyCodeTo());;
 			pstmt.setFloat(4, entity.getAmount());
-			pstmt.setTimestamp(5, entity.getDate());
+			pstmt.setTimestamp(5, entity.getCreated());
 			pstmt.setFloat(6, entity.getResult());
 			pstmt.executeUpdate();
 			entity.setId(getGeneratedId(c, "tranzaction"));
@@ -41,13 +41,13 @@ public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Tra
 	public void update(Transaction entity) {
 		try (Connection c = createConnection()) {
 			PreparedStatement pstmt = c
-					.prepareStatement("update transaction set client_id=?, currency_code_from=?,  currency_code_to=?, amount=?,  date=?, result=? where id=?");
+					.prepareStatement("update tranzaction set client_id=?, currency_code_from=?,  currency_code_to=?, amount=?, result=? where id=?");
 			pstmt.setInt(1, entity.getClientId());
 			pstmt.setString(2, entity.getCurrencyCodeFrom());
 			pstmt.setString(3, entity.getCurrencyCodeTo());
 			pstmt.setFloat(4, entity.getAmount());
-			pstmt.setTimestamp(5, entity.getDate());
-			pstmt.setFloat(6, entity.getResult());
+			pstmt.setFloat(5, entity.getResult());
+			pstmt.setInt(6, entity.getId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("can't update tranzaction entity", e);
@@ -109,7 +109,7 @@ public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Tra
 		// getObject() is unsupported by current JDBC driver. We will get "0" if field is NULL in DB
 		entity.setCurrencyCodeTo(rs.getString("currency_code_to"));
 		entity.setAmount(rs.getFloat("amount"));
-		entity.setDate(rs.getTimestamp("date"));
+		entity.setCreated(rs.getTimestamp("created"));
 		entity.setResult(rs.getFloat("result"));
 		return entity;
 	}

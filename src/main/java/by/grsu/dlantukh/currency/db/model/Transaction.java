@@ -14,7 +14,7 @@ public class Transaction {
 		
 		private Float amount;
 		
-		private Timestamp date;
+		private Timestamp created;
 		
 		private Float result;
 
@@ -58,12 +58,12 @@ public class Transaction {
 			this.amount = amount;
 		}
 
-		public Timestamp getDate() {
-			return date;
+		public Timestamp getCreated() {
+			return created;
 		}
 
-		public void setDate(Timestamp date) {
-			this.date = date;
+		public void setCreated(Timestamp created) {
+			this.created = created;
 		}
 
 		public Float getResult() {
@@ -77,11 +77,12 @@ public class Transaction {
 		@Override
 		public String toString() {
 			return "Transaction [id=" + id + ", clientId=" + clientId + ", currencyCodeFrom=" + currencyCodeFrom
-					+ ", currencyCodeTo=" + currencyCodeTo + ", amount=" + amount + ", date=" + date + ", result="
+					+ ", currencyCodeTo=" + currencyCodeTo + ", amount=" + amount + ", created=" + created + ", result="
 					+ result + ", getId()=" + getId() + ", getClientId()=" + getClientId() + ", getCurrencyCodeFrom()="
 					+ getCurrencyCodeFrom() + ", getCurrencyCodeTo()=" + getCurrencyCodeTo() + ", getAmount()="
-					+ getAmount() + ", getDate()=" + getDate() + ", getResult()=" + getResult() + ", getClass()="
+					+ getAmount() + ", getCreated()=" + getCreated() + ", getResult()=" + getResult() + ", getClass()="
 					+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 		}
-
 }
+
+		

@@ -28,7 +28,7 @@ public class Main{
 		transaction.setCurrencyCodeFrom("EUR");
 		transaction.setCurrencyCodeTo("USD");
 		transaction.setAmount(5000.0f);
-		transaction.setDate(new Timestamp(new Date().getTime()));
+		transaction.setCreated(new Timestamp(new Date().getTime()));
 		transaction.setResult(155f);
 		System.out.println (transaction.toString());
 		
