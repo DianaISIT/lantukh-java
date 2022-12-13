@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.sqlite.SQLiteConfig;
+
+import by.grsu.dlantukh.currency.web.dto.SortDto;
+import by.grsu.dlantukh.currency.web.dto.TableStateDto;
 
 public abstract class AbstractDao {
 	private static final String DB_FOLDER = "db-storage";
@@ -43,6 +47,13 @@ public abstract class AbstractDao {
 	protected Integer getGeneratedId(Connection c, String tableName) throws SQLException {
 		return getGeneratedId(c, tableName, "id");
 	}
+	public static boolean isDbExist() throws SQLException {
+		try (Connection c = createConnection()) {
+			DatabaseMetaData metaData = c.getMetaData();
+			ResultSet rs = metaData.getTables(null, null, null, null);
+			return rs.next(); // assume DB exists if at least one table presents
+		}
+	}
 
 	public static void createDbSchema() {
 		System.out.println(String.format("create DB %s", DB_NAME));
@@ -65,6 +76,16 @@ public abstract class AbstractDao {
 		System.out.println(String.format("delete DB %s", DB_NAME));
 		File dbDataFile = new File(String.format("%s/%s", DB_FOLDER, DB_NAME));
 		dbDataFile.delete();
+	}
+	
+	protected int resolveOffset(TableStateDto dto) {
+		int offset = dto.getItemsPerPage() * (dto.getPage() - 1);
+		return dto.getTotalCount() < offset ? 0 : offset;
+
+	}
+
+	protected String resolveSortOrder(SortDto sortDto) {
+		return sortDto.isAscending() ? "asc" : "desc";
 	}
 
 }

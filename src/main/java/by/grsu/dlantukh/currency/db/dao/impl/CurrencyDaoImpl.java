@@ -10,6 +10,8 @@ import java.util.List;
 import by.grsu.dlantukh.currency.db.dao.AbstractDao;
 import by.grsu.dlantukh.currency.db.dao.IDao;
 import by.grsu.dlantukh.currency.db.model.Currency;
+import by.grsu.dlantukh.currency.web.dto.SortDto;
+import by.grsu.dlantukh.currency.web.dto.TableStateDto;
 
 public class CurrencyDaoImpl extends AbstractDao implements IDao<String, Currency> {
 
@@ -98,6 +100,45 @@ public class CurrencyDaoImpl extends AbstractDao implements IDao<String, Currenc
 		entity.setCode(rs.getString("code"));
 		entity.setName(rs.getString("name"));
 		return entity;
+	}
+	
+
+	@Override
+	public List<Currency> find(TableStateDto tableStateDto) {
+		List<Currency> entitiesList = new ArrayList<>();
+		try (Connection c = createConnection()) {
+			StringBuilder sql = new StringBuilder("select * from currency");
+
+			final SortDto sortDto = tableStateDto.getSort();
+			if (sortDto != null) {
+				sql.append(String.format(" order by %s %s", sortDto.getColumn(), resolveSortOrder(sortDto)));
+			}
+
+			sql.append(" limit " + tableStateDto.getItemsPerPage());
+			sql.append(" offset " + resolveOffset(tableStateDto));
+
+			System.out.println("searching Currencyes using SQL: " + sql);
+			ResultSet rs = c.createStatement().executeQuery(sql.toString());
+			while (rs.next()) {
+				Currency entity = rowToEntity(rs);
+				entitiesList.add(entity);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("can't select Currency entities", e);
+		}
+		return entitiesList;
+	}
+
+	@Override
+	public int count() {
+		try (Connection c = createConnection()) {
+			PreparedStatement pstmt = c.prepareStatement("select count(*) as c from currency");
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("c");
+		} catch (SQLException e) {
+			throw new RuntimeException("can't get currency count", e);
+		}
 	}
 
 }

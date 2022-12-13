@@ -10,6 +10,8 @@ import java.util.List;
 import by.grsu.dlantukh.currency.db.dao.AbstractDao;
 import by.grsu.dlantukh.currency.db.dao.IDao;
 import by.grsu.dlantukh.currency.db.model.Transaction;
+import by.grsu.dlantukh.currency.web.dto.SortDto;
+import by.grsu.dlantukh.currency.web.dto.TableStateDto;
 
 public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Transaction> {
 	public static final TransactionDaoImpl INSTANCE = new TransactionDaoImpl();
@@ -112,5 +114,44 @@ public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Tra
 		entity.setCreated(rs.getTimestamp("created"));
 		entity.setResult(rs.getFloat("result"));
 		return entity;
+	}
+	
+
+	@Override
+	public List<Transaction> find(TableStateDto tableStateDto) {
+		List<Transaction> entitiesList = new ArrayList<>();
+		try (Connection c = createConnection()) {
+			StringBuilder sql = new StringBuilder("select * from tranzaction");
+
+			final SortDto sortDto = tableStateDto.getSort();
+			if (sortDto != null) {
+				sql.append(String.format(" order by %s %s", sortDto.getColumn(), resolveSortOrder(sortDto)));
+			}
+
+			sql.append(" limit " + tableStateDto.getItemsPerPage());
+			sql.append(" offset " + resolveOffset(tableStateDto));
+
+			System.out.println("searching Transactions using SQL: " + sql);
+			ResultSet rs = c.createStatement().executeQuery(sql.toString());
+			while (rs.next()) {
+				Transaction entity = rowToEntity(rs);
+				entitiesList.add(entity);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("can't select Transaction entities", e);
+		}
+		return entitiesList;
+	}
+
+	@Override
+	public int count() {
+		try (Connection c = createConnection()) {
+			PreparedStatement pstmt = c.prepareStatement("select count(*) as c from tranzaction");
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("c");
+		} catch (SQLException e) {
+			throw new RuntimeException("can't get tranzactions count", e);
+		}
 	}
 }

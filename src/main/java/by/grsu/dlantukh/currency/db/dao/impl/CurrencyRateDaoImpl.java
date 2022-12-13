@@ -11,8 +11,9 @@ import by.grsu.dlantukh.currency.db.dao.AbstractDao;
 import by.grsu.dlantukh.currency.db.dao.IDao;
 import by.grsu.dlantukh.currency.db.model.Currency;
 import by.grsu.dlantukh.currency.db.model.CurrencyRate;
+import by.grsu.dlantukh.currency.web.dto.TableStateDto;
 //FIXME
-public class CurrencyRateDaoImpl extends AbstractDao  {
+public class CurrencyRateDaoImpl extends AbstractDao implements IDao<Integer, CurrencyRate> {
 
 	// single instance of this class to be used by the all consumers
 	public static final CurrencyRateDaoImpl INSTANCE = new CurrencyRateDaoImpl();
@@ -109,6 +110,28 @@ public class CurrencyRateDaoImpl extends AbstractDao  {
 		entity.setValuePurchase(rs.getFloat("value_purchase"));
 		entity.setValuePokypka(rs.getFloat("value_pokypka"));
 		return entity;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public CurrencyRate getById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CurrencyRate> find(TableStateDto tableStateDto) {
+		throw new RuntimeException("not implemented");
+	}
+
+	@Override
+	public int count() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

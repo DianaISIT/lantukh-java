@@ -83,6 +83,7 @@ public class Transaction {
 					+ getAmount() + ", getCreated()=" + getCreated() + ", getResult()=" + getResult() + ", getClass()="
 					+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 		}
+
 }
 
 		
