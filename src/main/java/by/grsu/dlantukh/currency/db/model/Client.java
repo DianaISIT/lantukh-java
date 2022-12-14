@@ -1,15 +1,15 @@
 package by.grsu.dlantukh.currency.db.model;
 
 public class Client {
-	
+
 	private Integer id;
-	
+
 	private String firstName;
-	
+
 	private String lastName;
-	
+
 	private String patronymic;
-	
+
 	private String passport;
 
 	public Integer getId() {

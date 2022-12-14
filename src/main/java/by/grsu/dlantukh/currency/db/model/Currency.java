@@ -1,11 +1,10 @@
 package by.grsu.dlantukh.currency.db.model;
 
 public class Currency {
-	
-	private String code;
-	
-	private String name;
 
+	private String code;
+
+	private String name;
 
 	public String getCode() {
 		return code;

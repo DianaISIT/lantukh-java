@@ -1,8 +1,8 @@
 package by.grsu.dlantukh.currency.web.dto;
 
 public class CurrencyDto {
-		
-		public String getCode() {
+
+	public String getCode() {
 		return code;
 	}
 
@@ -18,15 +18,13 @@ public class CurrencyDto {
 		this.name = name;
 	}
 
-		@Override
+	@Override
 	public String toString() {
 		return "CurrencyDto [code=" + code + ", name=" + name + "]";
 	}
 
-		private String code;
-		
-		private String name;
+	private String code;
 
-
+	private String name;
 
 }

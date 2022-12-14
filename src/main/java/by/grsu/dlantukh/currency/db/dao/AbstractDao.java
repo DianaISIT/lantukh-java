@@ -47,6 +47,7 @@ public abstract class AbstractDao {
 	protected Integer getGeneratedId(Connection c, String tableName) throws SQLException {
 		return getGeneratedId(c, tableName, "id");
 	}
+
 	public static boolean isDbExist() throws SQLException {
 		try (Connection c = createConnection()) {
 			DatabaseMetaData metaData = c.getMetaData();
@@ -77,7 +78,7 @@ public abstract class AbstractDao {
 		File dbDataFile = new File(String.format("%s/%s", DB_FOLDER, DB_NAME));
 		dbDataFile.delete();
 	}
-	
+
 	protected int resolveOffset(TableStateDto dto) {
 		int offset = dto.getItemsPerPage() * (dto.getPage() - 1);
 		return dto.getTotalCount() < offset ? 0 : offset;

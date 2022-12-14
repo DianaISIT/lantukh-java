@@ -12,7 +12,7 @@
 		<thead>
 			<tr>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="id">DB ID</mytaglib:sort-link></th>
-				<th>Client</th>
+				<th>Client</th>		
 				<th>Currency Code From</th>
 				<th>Currency Code To</th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="amount">Amount</mytaglib:sort-link></th>
@@ -25,7 +25,7 @@
 			<c:forEach var="entity" items="${list}" varStatus="loopCounter">
 				<tr>
 					<td><c:out value="${entity.id}" /></td>
-					<td><c:out value="${entity.clientId}" /></td>
+					<td><c:out value="${entity.clientFirstName}" /></td>
 					<td><c:out value="${entity.created}" /></td>
 					<td><c:out value="${entity.currencyCodeFrom}" /></td>
 					<td><c:out value="${entity.currencyCodeTo}" /></td>

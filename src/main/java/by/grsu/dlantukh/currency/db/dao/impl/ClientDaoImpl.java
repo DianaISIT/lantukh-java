@@ -27,7 +27,8 @@ public class ClientDaoImpl extends AbstractDao implements IDao<Integer, Client> 
 	@Override
 	public void insert(Client entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("insert into client(first_name, last_name, patronymic, passport) values(?,?,?,?)");
+			PreparedStatement pstmt = c.prepareStatement(
+					"insert into client(first_name, last_name, patronymic, passport) values(?,?,?,?)");
 			pstmt.setString(1, entity.getFirstName());
 			pstmt.setString(2, entity.getLastName());
 			pstmt.setString(3, entity.getPatronymic());
@@ -42,7 +43,8 @@ public class ClientDaoImpl extends AbstractDao implements IDao<Integer, Client> 
 	@Override
 	public void update(Client entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("update client set first_name=?, last_name=?, patronymic=?, passport=? where id=?");
+			PreparedStatement pstmt = c.prepareStatement(
+					"update client set first_name=?, last_name=?, patronymic=?, passport=? where id=?");
 			pstmt.setString(1, entity.getFirstName());
 			pstmt.setString(2, entity.getLastName());
 			pstmt.setString(3, entity.getPatronymic());
@@ -110,7 +112,6 @@ public class ClientDaoImpl extends AbstractDao implements IDao<Integer, Client> 
 		entity.setPassport(rs.getString("passport"));
 		return entity;
 	}
-	
 
 	@Override
 	public List<Client> find(TableStateDto tableStateDto) {

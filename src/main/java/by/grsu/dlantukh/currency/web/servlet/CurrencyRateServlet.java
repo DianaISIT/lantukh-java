@@ -19,9 +19,11 @@ import by.grsu.dlantukh.currency.db.model.Currency;
 import by.grsu.dlantukh.currency.web.dto.CurrencyDto;
 import by.grsu.dlantukh.currency.db.dao.impl.CurrencyRateDaoImpl;
 import by.grsu.dlantukh.currency.db.model.CurrencyRate;
+import by.grsu.dlantukh.currency.db.model.Transaction;
 import by.grsu.dlantukh.currency.web.dto.CurrencyRateDto;
+import by.grsu.dlantukh.currency.web.dto.TableStateDto;
 
-public class CurrencyRateServlet extends HttpServlet {
+public class CurrencyRateServlet extends AbstractListServlet {
 	private static final IDao<String, Currency> currencyDao = CurrencyDaoImpl.INSTANCE;
 	private static final CurrencyRateDaoImpl currencyRateDao = CurrencyRateDaoImpl.INSTANCE;
 
@@ -37,7 +39,17 @@ public class CurrencyRateServlet extends HttpServlet {
 	}
 
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		List<CurrencyRate> currencyRates = currencyRateDao.getAll(); // get data
+		int totalCurrencyRates = currencyRateDao.count(); // get count of ALL items
+
+		final TableStateDto tableStateDto = resolveTableStateDto(req, totalCurrencyRates); // init TableStateDto for
+																							// specific
+		// Servlet and saves it in current
+		// request using key
+		// "currentPageTableState" to be
+		// used by 'paging' component
+
+		List<CurrencyRate> currencyRates = currencyRateDao.find(tableStateDto); // get data using paging and sorting
+																				// params
 
 		List<CurrencyRateDto> dtos = currencyRates.stream().map((entity) -> {
 			CurrencyRateDto dto = new CurrencyRateDto();
@@ -51,14 +63,14 @@ public class CurrencyRateServlet extends HttpServlet {
 		}).collect(Collectors.toList());
 
 		req.setAttribute("list", dtos); // set data as request attribute (like "add to map") to be used later in JSP
-		req.getRequestDispatcher("currency.jsp").forward(req, res); // delegate request processing to JSP
+		req.getRequestDispatcher("currency Rate.jsp").forward(req, res); // delegate request processing to JSP
 	}
 
 	private void handleEditView(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String idFrom = req.getParameter("idFrom");
 		String idTo = req.getParameter("idTo");// /currency?idFrom=usd&idTo=byn
 		CurrencyRateDto dto = new CurrencyRateDto();
-		if (!Strings.isNullOrEmpty(idFrom) &&!Strings.isNullOrEmpty(idTo)) {
+		if (!Strings.isNullOrEmpty(idFrom) && !Strings.isNullOrEmpty(idTo)) {
 			// object edit
 			CurrencyRate entity = currencyRateDao.getById(idFrom, idTo);
 			dto.setCurrencyFromCode(entity.getCurrencyFromCode());
@@ -68,19 +80,8 @@ public class CurrencyRateServlet extends HttpServlet {
 
 		}
 		req.setAttribute("dto", dto);
-		req.setAttribute("allCurrencyRates", getAllCurrencyesDtos());
-		req.getRequestDispatcher("Change_Course.jsp").forward(req, res);
-	}
-
-	private List<CurrencyRateDto> getAllCurrencyRatesDtos() {
-		return currencyRateDao.getAll().stream().map((entity) -> {
-			CurrencyRateDto dto = new CurrencyRateDto();
-			dto.setCurrencyFromCode(entity.getCurrencyFromCode());
-			dto.setCurrencyToCode(entity.getCurrencyToCode());
-			dto.setValuePurchase(entity.getValuePurchase());
-			dto.setValuePokypka(entity.getValuePokypka());
-			return dto;
-		}).collect(Collectors.toList());
+		req.setAttribute("allCurrencyes", getAllCurrencyesDtos());
+		req.getRequestDispatcher("edit currency Rate.jsp").forward(req, res);
 	}
 
 	private List<CurrencyDto> getAllCurrencyesDtos() {
@@ -96,28 +97,27 @@ public class CurrencyRateServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("doPost");
 		CurrencyRate currencyRate = new CurrencyRate();
-		String idFrom = req.getParameter("idFrom");
-		String idTo = req.getParameter("idTo");
+		String idFrom = req.getParameter("currencyFromCode");
+		String idTo = req.getParameter("currencyToCode");
 		String valuePurchaseStr = req.getParameter("valuePurchase");
 		String valuePokypkaStr = req.getParameter("valuePokypka");
 
-		currencyRate.setCurrencyFromCode(idFrom == null ? null : idFrom);
-		currencyRate.setCurrencyToCode(idFrom == null ? null : idTo);
+		currencyRate.setCurrencyFromCode(idFrom);
+		currencyRate.setCurrencyToCode(idTo);
 		currencyRate.setValuePurchase(Strings.isNullOrEmpty(valuePurchaseStr) ? null : Float.parseFloat(valuePurchaseStr));
 		currencyRate.setValuePokypka(Strings.isNullOrEmpty(valuePokypkaStr) ? null : Float.parseFloat(valuePokypkaStr));
-		if (Strings.isNullOrEmpty(idFrom) &&!Strings.isNullOrEmpty(idTo)) {
+		if (currencyRateDao.getById(idFrom, idTo)==null) {
 			currencyRateDao.insert(currencyRate);
 		} else {
 			currencyRateDao.update(currencyRate);
 		}
-		res.sendRedirect("/currency"); // will send 302 back to client and client will execute GET /car
+		res.sendRedirect("/currencyRate"); // will send 302 back to client and client will execute GET /car
 	}
 
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("doDelete");
-		currencyRateDao.delete(Integer.parseInt(req.getParameter("id")));
+		currencyRateDao.delete(req.getParameter("idFrom"), req.getParameter("idTo"));
 	}
 
 }
-

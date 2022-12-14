@@ -41,7 +41,7 @@ public class CurrencyDaoImpl extends AbstractDao implements IDao<String, Currenc
 		try (Connection c = createConnection()) {
 			PreparedStatement pstmt = c.prepareStatement("update currency set name=? where code=?");
 			pstmt.setString(1, entity.getName());
-			pstmt.setString(2, entity.getCode()); 
+			pstmt.setString(2, entity.getCode());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("can't update currency entity", e);
@@ -101,7 +101,6 @@ public class CurrencyDaoImpl extends AbstractDao implements IDao<String, Currenc
 		entity.setName(rs.getString("name"));
 		return entity;
 	}
-	
 
 	@Override
 	public List<Currency> find(TableStateDto tableStateDto) {

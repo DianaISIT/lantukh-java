@@ -34,14 +34,14 @@ public class CurrencyServlet extends AbstractListServlet {
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		int totalCurrencyes = currencyDao.count(); // get count of ALL items
 
-		final TableStateDto tableStateDto = resolveTableStateDto(req, totalCurrencyes); // init TableStateDto for specific
-																					// Servlet and saves it in current
-																					// request using key
-																					// "currentPageTableState" to be
-																					// used by 'paging' component
+		final TableStateDto tableStateDto = resolveTableStateDto(req, totalCurrencyes); // init TableStateDto for
+																						// specific
+		// Servlet and saves it in current
+		// request using key
+		// "currentPageTableState" to be
+		// used by 'paging' component
 
 		List<Currency> currency = currencyDao.find(tableStateDto); // get data using paging and sorting params
-
 
 		List<CurrencyDto> dtos = currency.stream().map((entity) -> {
 			CurrencyDto dto = new CurrencyDto();
@@ -75,9 +75,8 @@ public class CurrencyServlet extends AbstractListServlet {
 		String currencyCodeStr = req.getParameter("code");
 		currency.setCode(req.getParameter("code"));
 		currency.setName(req.getParameter("name"));
-		
 
-		if (Strings.isNullOrEmpty(currencyCodeStr)) {
+		if (currencyDao.getById(currencyCodeStr) == null) {
 			currencyDao.insert(currency);
 		} else {
 			currency.setCode(currencyCodeStr.toString());

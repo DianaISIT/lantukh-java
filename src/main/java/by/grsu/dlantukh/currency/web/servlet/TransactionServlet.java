@@ -44,14 +44,14 @@ public class TransactionServlet extends AbstractListServlet {
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		int totalTransactions = transactionDao.count(); // get count of ALL items
 
-		final TableStateDto tableStateDto = resolveTableStateDto(req, totalTransactions); // init TableStateDto for specific
-																					// Servlet and saves it in current
-																					// request using key
-																					// "currentPageTableState" to be
-																					// used by 'paging' component
+		final TableStateDto tableStateDto = resolveTableStateDto(req, totalTransactions); // init TableStateDto for
+																							// specific
+		// Servlet and saves it in current
+		// request using key
+		// "currentPageTableState" to be
+		// used by 'paging' component
 
 		List<Transaction> transactions = transactionDao.find(tableStateDto); // get data using paging and sorting params
-
 
 		List<TransactionDto> dtos = transactions.stream().map((entity) -> {
 			TransactionDto dto = new TransactionDto();

@@ -1,14 +1,13 @@
 package by.grsu.dlantukh.currency.db.model;
 
 public class CurrencyRate {
-	
-	
+
 	private String currencyFromCode;
-	
+
 	private String currencyToCode;
-	
+
 	private Float valuePurchase;
-	
+
 	private Float valuePokypka;
 
 	public String getCurrencyFromCode() {

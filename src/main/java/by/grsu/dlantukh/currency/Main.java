@@ -8,21 +8,21 @@ import by.grsu.dlantukh.currency.db.model.Currency;
 import by.grsu.dlantukh.currency.db.model.CurrencyRate;
 import by.grsu.dlantukh.currency.db.model.Transaction;
 
-public class Main{
-	
-	public static void main(String [] args) {
-		
+public class Main {
+
+	public static void main(String[] args) {
+
 		Currency currency = new Currency();
-		
+
 		currency.setCode("EUR");
-		currency.setName("Евро");;
-		System.out.println (currency.toString());
-		
-		
+		currency.setName("Евро");
+		;
+		System.out.println(currency.toString());
+
 		////////////////
-		
+
 		Transaction transaction = new Transaction();
-		
+
 		transaction.setId(1);
 		transaction.setClientId(1);
 		transaction.setCurrencyCodeFrom("EUR");
@@ -30,28 +30,28 @@ public class Main{
 		transaction.setAmount(5000.0f);
 		transaction.setCreated(new Timestamp(new Date().getTime()));
 		transaction.setResult(155f);
-		System.out.println (transaction.toString());
-		
+		System.out.println(transaction.toString());
+
 		/////////
-		
+
 		Client client = new Client();
-		
+
 		client.setId(1);
 		client.setFirstName("Ivan");
 		client.setLastName("Ivanov");
 		client.setPatronymic("Ivanovich");
 		client.setPassport("KH54678765");
-		System.out.println (client.toString());
-		
+		System.out.println(client.toString());
+
 		//////////
-		
+
 		CurrencyRate currencyrate = new CurrencyRate();
-		
+
 		currencyrate.setCurrencyFromCode("EUR");
 		currencyrate.setCurrencyToCode("USD");
 		currencyrate.setValuePurchase(0.9950f);
 		currencyrate.setValuePokypka(0.9760f);
-		System.out.println (currencyrate.toString());
-		
+		System.out.println(currencyrate.toString());
+
 	}
 }

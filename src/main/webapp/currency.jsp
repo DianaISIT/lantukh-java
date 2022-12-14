@@ -27,7 +27,7 @@
 						title="редактировать" href="/currency?view=edit&id=${entity.code}"><i
 							class="material-icons">edit</i></a><a
 						class="btn-small btn-floating waves-effect waves-light red"
-						title="удалить" onclick="sendHTTPDelete('/currency?id=${entity.code}')"><i
+						title="удалить" onclick="sendHTTPDelete('/currency?code=${entity.code}')"><i
 							class="material-icons">delete</i></a></td>
 				</tr>
 			</c:forEach>

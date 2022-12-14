@@ -10,7 +10,6 @@
 
 	<div class="row">
 		<form class="col s12" method="post" action="/currency">
-			<input type="hidden" name="code" value="${dto.code}" />
 			<div class="row">
 				<div class="input-field col s6">
 					<input name="name" type="text"  value="${dto.name}" class="validate" > <label

@@ -21,6 +21,7 @@
 				<li><a href="/currency">Currency</a></li>
 				<li><a href="/transaction">Transaction</a></li>
 				<li><a href="/client">Client</a></li>
+				<li><a href="/currencyRate">Currency Rate</a></li>
 				<li><a href='#'>
 						<%
 						java.util.Date date = new java.util.Date();

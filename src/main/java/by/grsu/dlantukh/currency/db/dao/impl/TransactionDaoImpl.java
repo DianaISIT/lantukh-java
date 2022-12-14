@@ -23,11 +23,12 @@ public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Tra
 	@Override
 	public void insert(Transaction entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c
-					.prepareStatement("insert into tranzaction(client_id, currency_code_from, currency_code_to, amount, created, result) values(?,?,?,?,?,?)");
+			PreparedStatement pstmt = c.prepareStatement(
+					"insert into tranzaction(client_id, currency_code_from, currency_code_to, amount, created, result) values(?,?,?,?,?,?)");
 			pstmt.setInt(1, entity.getClientId());
 			pstmt.setString(2, entity.getCurrencyCodeFrom());
-			pstmt.setString(3, entity.getCurrencyCodeTo());;
+			pstmt.setString(3, entity.getCurrencyCodeTo());
+			;
 			pstmt.setFloat(4, entity.getAmount());
 			pstmt.setTimestamp(5, entity.getCreated());
 			pstmt.setFloat(6, entity.getResult());
@@ -42,8 +43,8 @@ public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Tra
 	@Override
 	public void update(Transaction entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c
-					.prepareStatement("update tranzaction set client_id=?, currency_code_from=?,  currency_code_to=?, amount=?, result=? where id=?");
+			PreparedStatement pstmt = c.prepareStatement(
+					"update tranzaction set client_id=?, currency_code_from=?,  currency_code_to=?, amount=?, result=? where id=?");
 			pstmt.setInt(1, entity.getClientId());
 			pstmt.setString(2, entity.getCurrencyCodeFrom());
 			pstmt.setString(3, entity.getCurrencyCodeTo());
@@ -108,14 +109,14 @@ public class TransactionDaoImpl extends AbstractDao implements IDao<Integer, Tra
 		entity.setId(rs.getInt("id"));
 		entity.setClientId(rs.getInt("client_id"));
 		entity.setCurrencyCodeFrom(rs.getString("currency_code_from"));
-		// getObject() is unsupported by current JDBC driver. We will get "0" if field is NULL in DB
+		// getObject() is unsupported by current JDBC driver. We will get "0" if field
+		// is NULL in DB
 		entity.setCurrencyCodeTo(rs.getString("currency_code_to"));
 		entity.setAmount(rs.getFloat("amount"));
 		entity.setCreated(rs.getTimestamp("created"));
 		entity.setResult(rs.getFloat("result"));
 		return entity;
 	}
-	
 
 	@Override
 	public List<Transaction> find(TableStateDto tableStateDto) {

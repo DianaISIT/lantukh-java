@@ -3,92 +3,90 @@ package by.grsu.dlantukh.currency.web.dto;
 import java.sql.Timestamp;
 
 public class TransactionDto {
-	 @Override
+	@Override
 	public String toString() {
 		return "TransactionDto [id=" + id + ", clientId=" + clientId + ", clientFirstName=" + clientFirstName
 				+ ", currencyCodeFrom=" + currencyCodeFrom + ", currencyCodeTo=" + currencyCodeTo + ", amount=" + amount
 				+ ", created=" + created + ", result=" + result + "]";
 	}
 
-	    private Integer id;
-		
-		private Integer clientId;
-		private String clientFirstName;
-		
-		private String currencyCodeFrom;
-		
-		private String currencyCodeTo;
-		
-		private Float amount;
-		
-		private Timestamp created;
-		
-		private Float result;
-		
-		public Integer getId() {
-			return id;
-		}
+	private Integer id;
 
-		public void setId(Integer id) {
-			this.id = id;
-		}
+	private Integer clientId;
+	private String clientFirstName;
 
-		public Integer getClientId() {
-			return clientId;
-		}
+	private String currencyCodeFrom;
 
-		public void setClientId(Integer clientId) {
-			this.clientId = clientId;
-		}
+	private String currencyCodeTo;
 
-		public String getClientFirstName() {
-			return clientFirstName;
-		}
+	private Float amount;
 
-		public void setClientFirstName(String clientFirstName) {
-			this.clientFirstName = clientFirstName;
-		}
+	private Timestamp created;
 
-		public String getCurrencyCodeFrom() {
-			return currencyCodeFrom;
-		}
+	private Float result;
 
-		public void setCurrencyCodeFrom(String currencyCodeFrom) {
-			this.currencyCodeFrom = currencyCodeFrom;
-		}
+	public Integer getId() {
+		return id;
+	}
 
-		public String getCurrencyCodeTo() {
-			return currencyCodeTo;
-		}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-		public void setCurrencyCodeTo(String currencyCodeTo) {
-			this.currencyCodeTo = currencyCodeTo;
-		}
+	public Integer getClientId() {
+		return clientId;
+	}
 
-		public Float getAmount() {
-			return amount;
-		}
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
+	}
 
-		public void setAmount(Float amount) {
-			this.amount = amount;
-		}
+	public String getClientFirstName() {
+		return clientFirstName;
+	}
 
-		public Timestamp getCreated() {
-			return created;
-		}
+	public void setClientFirstName(String clientFirstName) {
+		this.clientFirstName = clientFirstName;
+	}
 
-		public void setCreated(Timestamp created) {
-			this.created = created;
-		}
+	public String getCurrencyCodeFrom() {
+		return currencyCodeFrom;
+	}
 
-		public Float getResult() {
-			return result;
-		}
+	public void setCurrencyCodeFrom(String currencyCodeFrom) {
+		this.currencyCodeFrom = currencyCodeFrom;
+	}
 
-		public void setResult(Float result) {
-			this.result = result;
-		}
+	public String getCurrencyCodeTo() {
+		return currencyCodeTo;
+	}
 
+	public void setCurrencyCodeTo(String currencyCodeTo) {
+		this.currencyCodeTo = currencyCodeTo;
+	}
 
+	public Float getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Float amount) {
+		this.amount = amount;
+	}
+
+	public Timestamp getCreated() {
+		return created;
+	}
+
+	public void setCreated(Timestamp created) {
+		this.created = created;
+	}
+
+	public Float getResult() {
+		return result;
+	}
+
+	public void setResult(Float result) {
+		this.result = result;
+	}
 
 }

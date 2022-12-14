@@ -35,13 +35,13 @@ public class ClientServlet extends AbstractListServlet {
 		int totalClients = clientDao.count(); // get count of ALL items
 
 		final TableStateDto tableStateDto = resolveTableStateDto(req, totalClients); // init TableStateDto for specific
-																					// Servlet and saves it in current
-																					// request using key
-																					// "currentPageTableState" to be
-																					// used by 'paging' component
+																						// Servlet and saves it in
+																						// current
+																						// request using key
+																						// "currentPageTableState" to be
+																						// used by 'paging' component
 
 		List<Client> clients = clientDao.find(tableStateDto); // get data using paging and sorting params
-
 
 		List<ClientDto> dtos = clients.stream().map((entity) -> {
 			ClientDto dto = new ClientDto();
